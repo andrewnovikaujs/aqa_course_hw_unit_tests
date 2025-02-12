@@ -7,6 +7,6 @@ n + nn + nnn, где n не перемножаются, а конкатенир�
 
 let number;
 
-number = 4;
+number = 5;
 
-console.log(number + String(number+number) + String(number+number+number))
+console.log(number + +((String(number) + String(number))) + +((String(number) + String(number) + String(number))))
