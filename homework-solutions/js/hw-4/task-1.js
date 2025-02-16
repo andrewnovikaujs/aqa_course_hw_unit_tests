@@ -4,19 +4,8 @@
   - Создайте переменную grade, которая должна получить значение "middle" если salary больше или равна 1000, и значение "junior" - если меньше
   */
 
-  let salary = 1000;
+let salary = 1;
 
-  let grade;
+let grade = (salary >= 1000) ? 'middle' : 'junior';
 
-  if (salary >= 1000){
-    grade = "middle"
-  }
-    else if(salary < 1000) {
-        grade = "junior"
-    }
-    else {
-        console.log("Error")
-    }
-
-console.log(grade)
-
+console.log(grade);
