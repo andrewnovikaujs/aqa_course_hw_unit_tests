@@ -15,15 +15,17 @@ let age;
 
 age = '3d';
 
-if (typeof age !== 'number') {
-  age = +age;
-}
-
-if (age) {
-  if (typeof age !== 'number') {
-    console.log('Incorrect data type');
-  } else if (age < minAge) {
-    console.log("You don't have access cause your age is " + age + " It's less then " + minAge);
+if (isNaN(age)) {
+  console.log('Incorrect data type');
+} else {
+  age = Number(age); // +age
+  if (age < minAge) {
+    console.log(
+      "You don't have access cause your age is " +
+        age +
+        " It's less then " +
+        minAge,
+    );
   } else if (age >= minAge && age < maxAge) {
     console.log('Welcome  !');
   } else if (age > maxAge) {
@@ -31,6 +33,5 @@ if (age) {
   } else {
     console.log('Technical work');
   }
-} else {
-  console.log('Not a number');
 }
+
