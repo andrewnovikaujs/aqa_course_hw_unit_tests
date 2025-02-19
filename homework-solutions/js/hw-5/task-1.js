@@ -30,9 +30,7 @@ console.log(evenNumbersResult);
 let smilePatternResult = '';
 
 for (let i = 1; i <= 5; i++) {
-  for (let j = 0; j < i; j++) {
-    smilePatternResult += `:)`;
-  }
+  smilePatternResult += `:)`.repeat(i);
   smilePatternResult += `\n`;
 }
 smilePatternResult = smilePatternResult.trim();
