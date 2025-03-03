@@ -7,12 +7,12 @@
 */
 
 function findMissingNumber(numbers) {
+  
+  const lengthExpected = numbers.length + 1;
 
-  const n = numbers.length + 1;
+  const expectedSum = (lengthExpected * (lengthExpected + 1)) / 2;
 
-  const expectedSum = (n * (n + 1)) / 2;
-
-  const actualSum = numbers.reduce((sum, num) => sum + num, 0);
+  const actualSum = numbers.reduce((result, number) => result + number, 0);
 
   return expectedSum - actualSum;
 }
