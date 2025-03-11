@@ -14,23 +14,54 @@ const characters = [
 ];
 
 function addCharacter(character) {
-  // Ваш код
+  if (typeof character.name === 'string' && typeof character.age === 'number') {
+    characters.push(character);
+  } else {
+    throw new Error('Invalid input');
+  }
 }
+
+addCharacter({ name: 'Andrei', age: 32 });
+
+console.log(characters);
 
 function getCharacter(name) {
-  // Ваш код
+  const result = characters.find((character) => character.name === name);
+  return result;
 }
+
+console.log(getCharacter('Jack'));
 
 function getCharactersByAge(minAge) {
-  // Ваш код
+  if (typeof minAge !== 'number' || minAge <= 0) {
+    throw new Error('minAge должно быть числом и больше чем 0');
+  }
+
+  return characters.filter((character) => character.age >= minAge);
 }
 
+console.log(getCharactersByAge(40));
+
 function updateCharacter(name, newCharacter) {
-  // Ваш код
+  {
+    const character = getCharacter(name);
+
+    if (character) {
+      if (newCharacter.name) character.name = newCharacter.name;
+      if (newCharacter.age) character.age = newCharacter.age;
+    } else {
+      throw new Error('Character is not presented in the array');
+    }
+  }
 }
 
 function removeCharacter(name) {
-  // Ваш код
+  const characterIndex = characters.findIndex((character) => character.name === name);
+  if (characterIndex !== -1) {
+    characters.splice(characterIndex, 1);
+  } else {
+    throw new Error('Character not found');
+  }
 }
 
 export { characters, addCharacter, updateCharacter, getCharacter, getCharactersByAge, removeCharacter };
