@@ -1,14 +1,42 @@
 class Employee {
   #salary;
   constructor(firstName, lastName, profession, salary) {
-    this._firstName = firstName;
-    this._lastName = lastName;
-    this._profession = profession;
-    this.#salary = salary;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.profession = profession;
+    this.salary = salary;
   }
 
   getFullName() {
     return `${this._firstName} ${this._lastName}`;
+  }
+
+  #validateSalary(value) {
+    if (typeof value !== 'number' || isNaN(value)) {
+      throw new Error('Salary must be a valid number');
+    }
+    if (value <= 0) {
+      throw new Error('Salary must be greater than zero');
+    }
+    if (value >= 10000) {
+      throw new Error('Salary must be less than 10000');
+    }
+  }
+
+  #validateName(value, fieldName, minLength = 2) {
+    const regex = /^[A-Za-z]+$/;
+    if (typeof value !== 'string' || !regex.test(value) || value.length < minLength || value.length > 50) {
+      throw new Error(
+        `${fieldName} must contain only latin letters and be between ${minLength} and 50 characters long`,
+      );
+    }
+  }
+
+  #validateProfession(value) {
+    const regex = /^[A-Za-z ]+$/;
+    if (typeof value !== 'string' || !regex.test(value) || value.trim().length < 1) {
+      throw new Error('Profession must contain only latin letters and spaces and be at least 2 characters long');
+    }
   }
 
   get salary() {
@@ -16,14 +44,7 @@ class Employee {
   }
 
   set salary(value) {
-    if (value < 0 || isNaN(value) || typeof value === 'string' || value === 0) {
-      throw new Error('Salary cannot be negative');
-    } else if (value >= 10000) {
-      throw new Error('Salary must be less than 10000');
-    } else if (typeof value !== 'number') {
-      throw new Error('Salary must be a number');
-    }
-
+    this.#validateSalary(value);
     this.#salary = value;
   }
 
@@ -32,14 +53,7 @@ class Employee {
   }
 
   set firstName(value) {
-    const regex = /^[A-Za-z]+$/;
-
-    if (!regex.test(value)) {
-      throw new Error('First name must contain only latin letters');
-    } else if (typeof value !== 'string' || value.length < 2 || value.length > 50) {
-      throw new Error('First name must be at least 2 characters long');
-    }
-
+    this.#validateName(value, 'First name');
     this._firstName = value;
   }
 
@@ -48,14 +62,7 @@ class Employee {
   }
 
   set lastName(value) {
-    const regex = /^[A-Za-z]+$/;
-
-    if (!regex.test(value)) {
-      throw new Error('Last name must contain only latin letters');
-    } else if (typeof value !== 'string' || value.length < 0 || value.length > 50) {
-      throw new Error('Last name must be at least 2 characters long');
-    }
-
+    this.#validateName(value, 'Last name', 1);
     this._lastName = value;
   }
 
@@ -64,14 +71,7 @@ class Employee {
   }
 
   set profession(value) {
-    const regex = /^[A-Za-z ]+$/;
-
-    if (!regex.test(value)) {
-      throw new Error('Profession must contain only latin letters and spaces');
-    } else if (typeof value !== 'string' || value.length < 0 || value === ' ') {
-      throw new Error('Profession must be at least 2 characters long');
-    }
-
+    this.#validateProfession(value);
     this._profession = value;
   }
 }
@@ -97,33 +97,29 @@ class Company {
       throw new Error('Invalid name input');
     }
 
-    const employee = this.#employees.find(
-      (employee) => employee.firstName === firstName, // Чувствительный к регистру поиск
-    );
-
+    const employee = this.#employees.find((emp) => emp.firstName === firstName);
     if (!employee) {
       throw new Error('Employee not found');
     }
-
     return employee;
   }
 
   getEmployeeIndex(firstName) {
     if (typeof firstName !== 'string' || firstName.length < 1) return -1;
-    return this.#employees.findIndex((employee) => employee.firstName === firstName);
+    return this.#employees.findIndex((emp) => emp.firstName === firstName);
   }
 
   removeEmployee(firstName) {
     const index = this.getEmployeeIndex(firstName);
     if (index === -1) {
-        throw new Error('Employee not found');
+      throw new Error('Employee not found');
     }
     this.#employees.splice(index, 1);
     return true;
   }
 
   getTotalSalary() {
-    return this.#employees.reduce((accum, employee) => employee.salary + accum, 0);
+    return this.#employees.reduce((accum, emp) => accum + emp.salary, 0);
   }
 
   getEmployees() {
@@ -131,7 +127,7 @@ class Company {
   }
 
   getInfo() {
-    return `Компания: ${this._title}\nАдрес: ${this._address}\nКоличество сотрудников: ${this.#employees.length}`;
+    return `Company: ${this._title}\nAddress: ${this._address}\nEmployees: ${this.#employees.length}`;
   }
 
   get title() {
@@ -169,8 +165,8 @@ company.addEmployee(emp2);
 company.addEmployee(emp3);
 
 console.log(company.getTotalSalary()); // 12000
-console.log(company.findEmployeeByName('Jane')); // Employee { firstName: 'Jane', ... }
+console.log(company.findEmployeeByName('Jane'));
 company.removeEmployee('John');
-console.log(company.getEmployees()); // [Employee, Employee]
+console.log(company.getEmployees());
 
 export { Employee, Company };
