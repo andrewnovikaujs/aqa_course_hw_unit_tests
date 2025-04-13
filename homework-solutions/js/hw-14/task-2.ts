@@ -7,8 +7,8 @@
    map([1,2,3,4,5], callback) => [0,2,6,12,20]
 */
 
-function map<T>(array: T[], callback: (item: T, index: number, array: T[]) => T): T[] {
-  const result: T[] = [];
+function map<T, U>(array: T[], callback: (item: T, index: number, array: T[]) => U): U[] {
+  const result: U[] = [];
   for (let i = 0; i < array.length; i++) {
     result.push(callback(array[i], i, array));
   }
