@@ -33,8 +33,13 @@ console.log(numberArray, stringArray);
     console.log(getLastItem([1, 2, 3, 4])); // 4
     console.log(getLastItem(['a', 'b', 'c'])); // 'c'
 */
-function getLastItem(array) {
-    return array[array.length - 1];
+function getLastElement(arr) {
+    if (arr.length === 0) {
+        console.error("Empty array");
+        return undefined;
+    }
+    return arr[arr.length - 1];
 }
-console.log(getLastItem([1, 2, 3, 4])); // 4
-console.log(getLastItem(['a', 'b', 'c'])); // 'c'
+console.log(getLastElement([1, 2, 3, 4])); // 4
+console.log(getLastElement(['a', 'b', 'c'])); // 'c'
+console.log(getLastElement([])); // 'error'

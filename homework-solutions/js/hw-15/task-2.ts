@@ -122,6 +122,9 @@ interface IPerson {
       Реализовывать метод getDetails(), который должен выводить полную информацию об объекте вида:
         'My name is Elena TSovna, I am software developer with 6 years of experience in TypeScript and 6000$ salary' (пример для девелопера)
 */
+
+
+type ProgrammingLanguage = 'js' | 'ts' | 'java' | 'python';
   
   // ✅ Интерфейс IPerson
 interface IPerson {
@@ -176,13 +179,13 @@ interface IPerson {
   
   // ✅ Класс Developer
   class Developer extends Employee {
-    private programmingLanguage: 'js' | 'ts' | 'java' | 'python';
+    private programmingLanguage: ProgrammingLanguage;
   
     constructor(
       name: string,
       surname: string,
       experienceYears: number,
-      programmingLanguage: 'js' | 'ts' | 'java' | 'python'
+      programmingLanguage: ProgrammingLanguage
     ) {
       super(name, surname, experienceYears);
       this.programmingLanguage = programmingLanguage;
@@ -193,7 +196,7 @@ interface IPerson {
     }
   
     getDetails(): string {
-      const langFullName: Record<string, string> = {
+      const langFullName: Record<ProgrammingLanguage, string> = {
         js: "JavaScript",
         ts: "TypeScript",
         java: "Java",
